@@ -1,0 +1,16 @@
+FROM voidstrap as build
+COPY keys/* /target/var/db/xbps/keys/
+ARG REPOSITORY=https://alpha.de.repo.voidlinux.org
+ARG ARCH=x86_64
+RUN XBPS_ARCH=${ARCH} xbps-install -yMU \
+        --repository=${REPOSITORY}/current \
+        --repository=${REPOSITORY}/current/musl \
+        -r /target \
+        base-minimal
+
+FROM scratch
+COPY --from=build /target /
+RUN xbps-reconfigure -a && \
+        rm -r /var/cache/xbps
+
+CMD ["/bin/sh"]

@@ -1,0 +1,15 @@
+FROM voidstrap as build
+COPY keys/* /target/var/db/xbps/keys/
+COPY noextract.conf /target/etc/xbps.d/noextract.conf
+ARG REPOSITORY=https://alpha.de.repo.voidlinux.org/current
+ARG ARCH=x86_64
+RUN XBPS_ARCH=${ARCH} xbps-install -yMU \
+        --repository=${REPOSITORY} \
+        -r /target \
+        xbps dash base-files coreutils && \
+        rm -rf /target/var/cache/
+
+FROM scratch
+COPY --from=build /target /
+RUN /usr/bin/xbps-reconfigure -a
+CMD ["/bin/sh"]
