@@ -1,4 +1,6 @@
-FROM voidstrap as build
+ARG BOOTSTRAP_SOURCE=ghcr.io/void-linux/docker-bootstrap
+ARG BOOTSTRAP_VERSION=latest
+FROM ${BOOTSTRAP_SOURCE}:${BOOTSTRAP_VERSION} as build
 COPY keys/* /target/var/db/xbps/keys/
 COPY noextract.conf /target/etc/xbps.d/noextract.conf
 ARG REPOSITORY=https://alpha.de.repo.voidlinux.org
