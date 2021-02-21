@@ -12,16 +12,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        - { flavor: full, arch: x86_64 }
-        - { flavor: full, arch: x86_64-musl }
-        - { flavor: thin, arch: x86_64 }
-        - { flavor: thin, arch: x86_64-musl }
-        - { flavor: thin-bb, arch: x86_64 }
-        - { flavor: thin-bb, arch: x86_64-musl }
-        - { flavor: mini, arch: x86_64 }
-        - { flavor: mini, arch: x86_64-musl }
-        - { flavor: mini-bb, arch: x86_64 }
-        - { flavor: mini-bb, arch: x86_64-musl }
+        flavor:
+          - full
+          - thin
+          - thin-bb
+          - mini
+          - mini-bb
+        arch:
+          - x86_64
+          - x86_64-musl
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
@@ -39,11 +38,11 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          file: "Dockerfile.${{ matrix.config.flavor }}"
-          build-args:
-            - ARCH="${{ matrix.config.arch }}"
-            - BOOTSTRAP_VERSION="c45f924"
+          file: Dockerfile.${{ matrix.flavor }}
+          build-args: |
+            ARCH=${{ matrix.arch }}
+            BOOTSTRAP_VERSION=c45f924
           push: true
-          tags:
-            - "ghcr.io/void-linux/void-linux:latest-${{ matrix.config.flavor }}-${{ matrix.config.arch }}"
-            - "ghcr.io/void-linux/void-linux:${{ github.event.inputs.version }}-${{ matrix.config.flavor }}-${{ matrix.config.arch }}"
+          tags: |
+            ghcr.io/void-linux/void-linux:latest-${{ matrix.flavor }}-${{ matrix.arch }}
+            ghcr.io/void-linux/void-linux:${{ github.event.inputs.version }}-${{ matrix.flavor }}-${{ matrix.arch }}
