@@ -45,5 +45,5 @@ jobs:
             - BOOTSTRAP_VERSION="c45f924"
           push: true
           tags:
-            - "ghcr.io/void-linux/void-${{ matrix.config.flavor }}:latest-${{ matrix.config.arch }}"
-            - "ghcr.io/void-linux/void-${{ matrix.config.flavor }}:${{ github.event.inputs.version }}-${{ matrix.config.arch }}"
+            - "ghcr.io/void-linux/void-linux:latest-${{ matrix.config.flavor }}-${{ matrix.config.arch }}"
+            - "ghcr.io/void-linux/void-linux:${{ github.event.inputs.version }}-${{ matrix.config.flavor }}-${{ matrix.config.arch }}"
