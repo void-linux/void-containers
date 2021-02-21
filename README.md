@@ -32,14 +32,15 @@ appropriate `XBPS_ARCH` value during the build.  For comparison, here
 is the size of all images built for both architectures on x86_64.
 
 ```
-REPOSITORY                        TAG                                                    SIZE
-voidlinux/mini-bb                 latest-x86_64-musl                                     8.624MB
-voidlinux/mini                    latest-x86_64-musl                                     15.55MB
-voidlinux/mini                    latest-x86_64                                          20.81MB
-voidlinux/thin-bb                 latest-x86_64-musl                                     12.17MB
-voidlinux/thin-bb                 latest-x86_64                                          34.38MB
-voidlinux/thin                    latest-x86_64-musl                                     19.1MB
-voidlinux/thin                    latest-x86_64                                          40.74MB
-voidlinux/full                    latest-x86_64-musl                                     181.6MB
-voidlinux/full                    latest-x86_64                                          241.7MB
+REPOSITORY                            TAG                                                    SIZE
+ghcr.io/void-linux/void-linux         20210220rc01-full-x86_64-musl                          92.78MB
+ghcr.io/void-linux/void-linux         20210220rc01-full-x86_64                               152.6MB
+ghcr.io/void-linux/void-linux         20210220rc01-mini-bb-x86_64                            14.48MB
+ghcr.io/void-linux/void-linux         20210220rc01-mini-x86_64                               20.84MB
+ghcr.io/void-linux/void-linux         20210220rc01-mini-bb-x86_64-musl                       8.624MB
+ghcr.io/void-linux/void-linux         20210220rc01-thin-bb-x86_64                            34.38MB
+ghcr.io/void-linux/void-linux         20210220rc01-thin-bb-x86_64-musl                       12.17MB
+ghcr.io/void-linux/void-linux         20210220rc01-thin-x86_64-musl                          19.1MB
+ghcr.io/void-linux/void-linux         20210220rc01-mini-x86_64-musl                          15.55MB
+ghcr.io/void-linux/void-linux         20210220rc01-thin-x86_64                               40.74MB
 ```
