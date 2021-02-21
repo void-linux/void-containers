@@ -13,6 +13,7 @@ RUN apk add ca-certificates curl && \
     base-minimal
 
 FROM scratch
+LABEL org.opencontainers.image.source https://github.com/void-linux/void-docker
 COPY --from=stage0 /target /
 # We dump the cache here as its only valid for x86_64 and we're trying
 # to be multi-arch
