@@ -6,7 +6,7 @@ RUN XBPS_ARCH=${ARCH} xbps-install -yMU \
         --repository=${REPOSITORY}/current \
         --repository=${REPOSITORY}/current/musl \
         -r /target \
-        base-minimal
+        base-voidstrap
 
 FROM scratch
 COPY --from=build /target /
