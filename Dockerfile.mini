@@ -15,6 +15,7 @@ RUN xbps-install -yMU binutils && \
         strip /target/usr/lib/* /target/usr/bin/* || exit 0
 
 FROM scratch
+LABEL org.opencontainers.image.source https://github.com/void-linux/void-docker
 COPY --from=build /target /
 RUN /usr/bin/xbps-reconfigure -a
 CMD ["/bin/sh"]

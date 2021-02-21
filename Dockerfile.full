@@ -11,6 +11,7 @@ RUN XBPS_ARCH=${ARCH} xbps-install -yMUS \
         base-minimal
 
 FROM scratch
+LABEL org.opencontainers.image.source https://github.com/void-linux/void-docker
 COPY --from=build /target /
 RUN xbps-reconfigure -a && \
         rm -r /var/cache/xbps
