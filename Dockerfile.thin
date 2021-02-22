@@ -9,7 +9,7 @@ RUN XBPS_ARCH=${ARCH} xbps-install -yMU \
         --repository=${REPOSITORY}/current \
         --repository=${REPOSITORY}/current/musl \
         -r /target \
-        xbps dash base-files coreutils grep && \
+        xbps base-files dash coreutils grep run-parts sed gawk && \
         rm -rf /target/var/cache/
 
 FROM scratch
