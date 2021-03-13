@@ -42,7 +42,7 @@ jobs:
           file: Dockerfile.${{ matrix.flavor }}
           build-args: |
             ARCH=${{ matrix.arch }}
-            BOOTSTRAP_VERSION=c45f924
+            BOOTSTRAP_VERSION=962218b
           push: true
           tags: |
             ghcr.io/void-linux/void-linux:latest-${{ matrix.flavor }}-${{ matrix.arch }}
