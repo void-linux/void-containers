@@ -37,7 +37,7 @@ jobs:
           file: Dockerfile.masterdir
           build-args: |
             ARCH=${{ matrix.arch }}
-            BOOTSTRAP_VERSION=c45f924
+            BOOTSTRAP_VERSION=latest
           push: true
           tags: |
             ghcr.io/void-linux/xbps-src-masterdir:latest-${{ matrix.arch }}
