@@ -8,7 +8,7 @@ RUN XBPS_ARCH=${ARCH} xbps-install -yMUS \
         --repository=${REPOSITORY}/current \
         --repository=${REPOSITORY}/current/musl \
         -r /target \
-        base-chroot
+        base-chroot chroot-curl
 
 FROM scratch
 LABEL org.opencontainers.image.source https://github.com/void-linux/void-docker
