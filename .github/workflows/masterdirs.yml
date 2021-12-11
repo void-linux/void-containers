@@ -14,9 +14,15 @@ jobs:
       fail-fast: false
       matrix:
         arch:
-          - x86_64
-          - x86_64-musl
-          - i686
+          - { xbps: x86_64, docker: linux/amd64, libc: glibc }
+          - { xbps: x86_64-musl, docker: linux/amd64, libc: musl }
+          - { xbps: i686, docker: linux/386, libc: glibc }
+          - { xbps: armv6l, docker: linux/arm/v6, libc: glibc }
+          - { xbps: armv6l-musl, docker: linux/arm/v6, libc: musl }
+          - { xbps: armv7l, docker: linux/arm, libc: glibc }
+          - { xbps: armv7l-musl, docker: linux/arm, libc: musl }
+          - { xbps: aarch64, docker: linux/arm64, libc: glibc }
+          - { xbps: aarch64-musl, docker: linux/arm64, libc: musl }
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
@@ -36,9 +42,12 @@ jobs:
         with:
           file: Dockerfile.masterdir
           build-args: |
-            ARCH=${{ matrix.arch }}
+            ARCH=${{ matrix.arch.xbps }}
             BOOTSTRAP_VERSION=latest
           push: true
+          platforms: ${{ matrix.arch.docker }}
           tags: |
-            ghcr.io/void-linux/xbps-src-masterdir:latest-${{ matrix.arch }}
-            ghcr.io/void-linux/xbps-src-masterdir:${{ github.event.inputs.version }}-${{ matrix.arch }}
+            ghcr.io/void-linux/xbps-src-masterdir:latest-${{ matrix.arch.xbps }}
+            ghcr.io/void-linux/xbps-src-masterdir:${{ github.event.inputs.version }}-${{ matrix.arch.xbps }}
+            ghcr.io/void-linux/xbps-src-masterdir:latest-${{ matrix.arch.libc }}
+            ghcr.io/void-linux/xbps-src-masterdir:${{ github.event.inputs.version }}-${{ matrix.arch.libc }}
