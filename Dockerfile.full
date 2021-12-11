@@ -4,9 +4,11 @@ FROM ${BOOTSTRAP_SOURCE}:${BOOTSTRAP_VERSION} as build
 COPY keys/* /target/var/db/xbps/keys/
 ARG REPOSITORY=https://repo-us.voidlinux.org
 ARG ARCH=x86_64
-RUN XBPS_ARCH=${ARCH} xbps-install -yMUS \
-        --repository=${REPOSITORY}/current \
-        --repository=${REPOSITORY}/current/musl \
+RUN \
+        if [[ "$ARCH" == "aarch64"* ]]; then export ARCH_DIR_PART='/aarch64'; fi; \
+        XBPS_ARCH=${ARCH} xbps-install -yMUS \
+        --repository=${REPOSITORY}/current${ARCH_DIR_PART} \
+        --repository=${REPOSITORY}/current${ARCH_DIR_PART}/musl \
         -r /target \
         base-minimal
 

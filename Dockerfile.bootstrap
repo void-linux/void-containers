@@ -7,9 +7,10 @@ RUN apk add ca-certificates curl && \
   curl ${REPOSITORY}/static/xbps-static-static-0.59_5.$(uname -m)-musl.tar.xz | \
         tar vJx && \
         rm -f /etc/ssl/certs/2e5ac55d.* && \
+  if [[ "$ARCH" == "aarch64"* ]]; then export ARCH_DIR_PART='/aarch64'; fi; \
   XBPS_ARCH=${ARCH} xbps-install.static -yMU \
-    --repository=${REPOSITORY}/current \
-    --repository=${REPOSITORY}/current/musl \
+    --repository=${REPOSITORY}/current${ARCH_DIR_PART} \
+    --repository=${REPOSITORY}/current${ARCH_DIR_PART}/musl \
     -r /target \
     base-minimal
 

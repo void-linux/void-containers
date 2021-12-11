@@ -20,8 +20,15 @@ jobs:
           - mini
           - mini-bb
         arch:
-          - x86_64
-          - x86_64-musl
+          - { xbps: x86_64, docker: linux/amd64, libc: glibc }
+          - { xbps: x86_64-musl, docker: linux/amd64, libc: musl }
+          - { xbps: i686, docker: linux/386, libc: glibc }
+          - { xbps: armv6l, docker: linux/arm/v6, libc: glibc }
+          - { xbps: armv6l-musl, docker: linux/arm/v6, libc: musl }
+          - { xbps: armv7l, docker: linux/arm, libc: glibc }
+          - { xbps: armv7l-musl, docker: linux/arm, libc: musl }
+          - { xbps: aarch64, docker: linux/arm64, libc: glibc }
+          - { xbps: aarch64-musl, docker: linux/arm64, libc: musl }
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
@@ -41,9 +48,12 @@ jobs:
         with:
           file: Dockerfile.${{ matrix.flavor }}
           build-args: |
-            ARCH=${{ matrix.arch }}
+            ARCH=${{ matrix.arch.xbps }}
             BOOTSTRAP_VERSION=962218b
           push: true
+          platforms: ${{ matrix.arch.docker }}
           tags: |
-            ghcr.io/void-linux/void-linux:latest-${{ matrix.flavor }}-${{ matrix.arch }}
-            ghcr.io/void-linux/void-linux:${{ github.event.inputs.version }}-${{ matrix.flavor }}-${{ matrix.arch }}
+            ghcr.io/void-linux/void-linux:latest-${{ matrix.flavor }}-${{ matrix.arch.xbps }}
+            ghcr.io/void-linux/void-linux:${{ github.event.inputs.version }}-${{ matrix.flavor }}-${{ matrix.arch.xbps }}
+            ghcr.io/void-linux/void-linux:${{ matrix.flavor }}-${{ matrix.arch.libc }}
+            ghcr.io/void-linux/void-linux:${{ github.event.inputs.version }}-${{ matrix.flavor }}-${{ matrix.arch.libc }}

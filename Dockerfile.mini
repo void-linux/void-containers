@@ -5,9 +5,11 @@ COPY keys/* /target/var/db/xbps/keys/
 COPY noextract.conf /target/etc/xbps.d/noextract.conf
 ARG REPOSITORY=https://repo-us.voidlinux.org
 ARG ARCH=x86_64
-RUN XBPS_ARCH=${ARCH} xbps-install -yMU \
-        --repository=${REPOSITORY}/current \
-        --repository=${REPOSITORY}/current/musl \
+RUN \
+        if [[ "$ARCH" == "aarch64"* ]]; then export ARCH_DIR_PART='/aarch64'; fi; \
+        XBPS_ARCH=${ARCH} xbps-install -yMU \
+        --repository=${REPOSITORY}/current${ARCH_DIR_PART} \
+        --repository=${REPOSITORY}/current${ARCH_DIR_PART}/musl \
         -r /target \
         xbps base-files dash coreutils grep run-parts sed gawk && \
         rm -rf /target/var/cache/
