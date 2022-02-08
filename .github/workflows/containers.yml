@@ -49,7 +49,7 @@ jobs:
           file: Dockerfile.${{ matrix.flavor }}
           build-args: |
             ARCH=${{ matrix.arch.xbps }}
-            BOOTSTRAP_VERSION=962218b
+            BOOTSTRAP_VERSION=e13f5ec
           push: true
           platforms: ${{ matrix.arch.docker }}
           tags: |
