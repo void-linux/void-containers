@@ -6,13 +6,14 @@ COPY noextract.conf /target/etc/xbps.d/noextract.conf
 ARG REPOSITORY=https://repo-us.voidlinux.org
 ARG ARCH=x86_64
 RUN \
-        if [ "${ARCH%-musl}" = "aarch64" ]; then \
-                export REPOSITORIES="--repository=${REPOSITORY}/current/aarch64"; \
-        elif [[ "${ARCH}" = "*-musl" ]]; then \
-                export REPOSITORIES="--repository=${REPOSITORY}/current/musl"; \
-        else \
-                export REPOSITORIES="--repository=${REPOSITORY}/current"; \
-        fi; \
+        case "${ARCH}" in \
+        aarch64*) \
+            export REPOSITORIES="--repository=${REPOSITORY}/current/aarch64" ;; \
+        *-musl) \
+            export REPOSITORIES="--repository=${REPOSITORY}/current/musl" ;; \
+        *) \
+            export REPOSITORIES="--repository=${REPOSITORY}/current" ;; \
+        esac; \
         XBPS_ARCH=${ARCH} xbps-install -yMU \
         $REPOSITORIES \
         -r /target \
