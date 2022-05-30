@@ -19,7 +19,7 @@ RUN \
         -r /target \
         xbps base-files dash coreutils grep run-parts sed gawk && \
         rm -rf /target/var/cache/
-RUN xbps-install -yMU binutils && \
+RUN xbps-install -yMU xbps && xbps-install -yMU binutils && \
         strip /target/usr/lib/* /target/usr/bin/* || exit 0
 
 FROM scratch
