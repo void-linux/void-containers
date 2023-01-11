@@ -2,7 +2,7 @@ ARG BOOTSTRAP_SOURCE=ghcr.io/void-linux/docker-bootstrap
 ARG BOOTSTRAP_VERSION=latest
 FROM ${BOOTSTRAP_SOURCE}:${BOOTSTRAP_VERSION} as build
 COPY keys/* /target/var/db/xbps/keys/
-ARG REPOSITORY=https://repo-us.voidlinux.org
+ARG REPOSITORY=https://repo-ci.voidlinux.org
 ARG ARCH=x86_64
 RUN \
         case "${ARCH}" in \
