@@ -15,6 +15,7 @@ RUN \
         esac; \
         XBPS_ARCH=${ARCH} xbps-install -yMUS \
         $REPOSITORIES \
+        $REPOSITORIES/bootstrap \
         -r /target \
         base-chroot chroot-curl
 
