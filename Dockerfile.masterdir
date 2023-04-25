@@ -17,7 +17,7 @@ RUN \
         $REPOSITORIES \
         $REPOSITORIES/bootstrap \
         -r /target \
-        base-chroot chroot-curl
+        base-chroot chroot-curl void-repo-bootstrap
 
 FROM scratch
 LABEL org.opencontainers.image.source https://github.com/void-linux/void-docker
