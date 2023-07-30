@@ -1,46 +1,60 @@
-# Void Linux Docker Images
+# Void Linux Container Images
 
-This repo contains the dockerfiles needed to build void-linux docker
-images.  There are 5 images provided:
+This repo contains what is needed to build void-linux OCI container
+images. There are 3 images provided for each libc (`glibc` or `musl`):
 
-  * `full`: Large image based on the base-minimal package and does not
-    contain a noextract configuration.  If you want something that is
-    as close to a full void VM as possible, this is the image you want
-    to start with.  These images average 242MB
+- `void-LIBC`: This image contains far fewer packages and uses a
+  `noextract` file to prevent certain directories from being added to
+  the image. These images average 40-65MB.
 
-  * `thin`: This image contains far fewer packages and uses a
-    noextract file to prevent certain directories from being added to
-    the image.  These images average 40MB.
+- `void-LIBC-full`: Large image based on the base-minimal package and
+  does not contain a `noextract` configuration. If you want something
+  that is as close to a full void VM as possible, this is the image you
+  want to start with.These images average 80-135MB.
 
-  * `thin-bb`: This image is the same as the thin image above, but
-    uses busybox instead of GNU coreutils.  Note that this is not a
-    well tested configuration with Void, but if you want minimalism
-    without breaking xbps-pkgdb, busybox is a good way to get it given
-    that these images average 34.4MB.
+- `void-LIBC-busybox`: This image is the same as the `void-LIBC` image
+  above, but uses busybox instead of GNU coreutils. Note that this is
+  not a well tested configuration with Void, but if you want a very
+  small image, busybox is a good way to get it. These images average 15-40MB.
 
-  * `mini`: The mini image is the same as the thin image in terms of
-    configuration, but all binaries and libraries a stripped.  This
-    brings the image size down to an average of 20MB, but the tradeoff
-    is that xbps-pkdb will complain that the files no longer match
-    their checksums.
+These images are available for the following OCI platforms:
 
-  * `mini-bb`: Same as thin-bb but stripped.  Average size is 15MB.
-
-
-Each image can also be built using the musl C library by passing an
-appropriate `XBPS_ARCH` value during the build.  For comparison, here
-is the size of all images built for both architectures on x86_64.
+- `linux/amd64`
+- `linux/386` (`glibc` only)
+- `linux/arm64`
+- `linux/arm/v7`
+- `linux/arm/v6`
 
 ```
-REPOSITORY                            TAG                                                    SIZE
-ghcr.io/void-linux/void-linux         20210220rc01-full-x86_64-musl                          92.78MB
-ghcr.io/void-linux/void-linux         20210220rc01-full-x86_64                               152.6MB
-ghcr.io/void-linux/void-linux         20210220rc01-mini-bb-x86_64                            14.48MB
-ghcr.io/void-linux/void-linux         20210220rc01-mini-x86_64                               20.84MB
-ghcr.io/void-linux/void-linux         20210220rc01-mini-bb-x86_64-musl                       8.624MB
-ghcr.io/void-linux/void-linux         20210220rc01-thin-bb-x86_64                            34.38MB
-ghcr.io/void-linux/void-linux         20210220rc01-thin-bb-x86_64-musl                       12.17MB
-ghcr.io/void-linux/void-linux         20210220rc01-thin-x86_64-musl                          19.1MB
-ghcr.io/void-linux/void-linux         20210220rc01-mini-x86_64-musl                          15.55MB
-ghcr.io/void-linux/void-linux         20210220rc01-thin-x86_64                               40.74MB
+REPOSITORY                              TAG      SIZE
+ghcr.io/void-linux/void-glibc           latest   64.5MB
+ghcr.io/void-linux/void-musl            latest   40.3MB
+ghcr.io/void-linux/void-glibc-full      latest   135MB
+ghcr.io/void-linux/void-musl-full       latest   81.4MB
+ghcr.io/void-linux/void-glibc-busybox   latest   39.6MB
+ghcr.io/void-linux/void-musl-busybox    latest   14.4MB
+```
+
+## Building locally
+
+With `docker` and  `docker-buildx`:
+
+1. Install and set up `docker` and `docker-buildx`. If building multi-platform images,
+  `qemu-user-static`, and `binfmt-support` are also needed:
+```
+xbps-install docker docker-buildx qemu-user-static binfmt-support
+ln -st /var/service /etc/sv/docker /etc/sv/binfmt-support
+```
+2. Build the image:
+```
+docker build --target <default|full|busybox> -f Containerfile --build-arg="LIBC=<glibc|musl>" . -t <yourtag>
+```
+> Note: To build multi-platform images, `docker buildx bake` can be used.
+
+With `podman`:
+
+1. Install and set up `podman`.
+2. Build the image:
+```
+TODO
 ```
