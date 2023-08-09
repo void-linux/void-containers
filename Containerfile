@@ -53,24 +53,27 @@ RUN --mount=type=cache,sharing=locked,target=/target/var/cache/xbps,id=repocache
 
 FROM scratch AS image-default
 COPY --link --from=install-default /target /
-RUN --mount=type=tmpfs,target=/tmp \
+RUN \
+  install -dm1777 tmp; \
   xbps-reconfigure -a; \
   rm -rf /var/cache/xbps/*
 CMD ["/bin/sh"]
 
 FROM scratch AS image-busybox
 COPY --link --from=install-busybox /target /
-RUN --mount=type=tmpfs,target=/tmp \
+RUN \
   for util in $(/usr/bin/busybox --list); do \
     [ ! -f "/usr/bin/$util" ] && /usr/bin/busybox ln -sfv busybox "/usr/bin/$util"; \
   done; \
+  install -dm1777 tmp; \
   xbps-reconfigure -a; \
   rm -rf /var/cache/xbps/*
 CMD ["/bin/sh"]
 
 FROM scratch AS image-full
-COPY --link --from=install-full /target /
-RUN --mount=type=tmpfs,target=/tmp \
+COPY --from=install-full /target /
+RUN \
+  install -dm1777 tmp; \
   xbps-reconfigure -a; \
   rm -rf /var/cache/xbps/*
 CMD ["/bin/sh"]
