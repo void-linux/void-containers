@@ -22,8 +22,8 @@ These images are available for the following OCI platforms:
 - `linux/amd64`
 - `linux/386` (`glibc` only)
 - `linux/arm64`
-- `linux/arm/v7`
-- `linux/arm/v6`
+
+> Note: images for `linux/arm/v7` and `linux/arm/v6` are currently unavailable, see issue [#12](https://github.com/void-linux/void-docker/issues/12) for more details
 
 ```
 REPOSITORY                              TAG      SIZE
@@ -41,20 +41,24 @@ With `docker` and  `docker-buildx`:
 
 1. Install and set up `docker` and `docker-buildx`. If building multi-platform images,
   `qemu-user-static`, and `binfmt-support` are also needed:
-```
-xbps-install docker docker-buildx qemu-user-static binfmt-support
-ln -st /var/service /etc/sv/docker /etc/sv/binfmt-support
+```sh
+xbps-install docker docker-buildx
+ln -s /etc/sv/docker /var/service
+# optional
+xbps-install binfmt-support
+ln -s /etc/sv/binfmt-support /var/service
+xbps-install qemu-user-static
 ```
 2. Build the image:
+```sh
+docker build --target "image-<default|full|busybox>" -f Containerfile --build-arg="LIBC=<glibc|musl>" . --tag <yourtag>
 ```
-docker build --target <default|full|busybox> -f Containerfile --build-arg="LIBC=<glibc|musl>" . -t <yourtag>
-```
-> Note: To build multi-platform images, `docker buildx bake` can be used.
+> Note: To easily build multi-platform images, `docker buildx bake` can be used.
 
 With `podman`:
 
 1. Install and set up `podman`.
 2. Build the image:
-```
-TODO
+```sh
+podman build --target "image-<default|full|busybox>" --build-arg="LIBC=<glibc|musl>" . --tag <yourtag>
 ```
