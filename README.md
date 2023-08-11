@@ -22,8 +22,8 @@ These images are available for the following OCI platforms:
 - `linux/amd64`
 - `linux/386` (`glibc` only)
 - `linux/arm64`
-
-> Note: images for `linux/arm/v7` and `linux/arm/v6` are currently unavailable, see issue [#12](https://github.com/void-linux/void-docker/issues/12) for more details
+- `linux/arm/v7`
+- `linux/arm/v6`
 
 ```
 REPOSITORY                              TAG      SIZE
