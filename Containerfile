@@ -55,7 +55,7 @@ FROM scratch AS image-default
 COPY --link --from=install-default /target /
 RUN \
   install -dm1777 tmp; \
-  xbps-reconfigure -a; \
+  xbps-reconfigure -fa; \
   rm -rf /var/cache/xbps/*
 CMD ["/bin/sh"]
 
@@ -66,7 +66,7 @@ RUN \
     [ ! -f "/usr/bin/$util" ] && /usr/bin/busybox ln -sfv busybox "/usr/bin/$util"; \
   done; \
   install -dm1777 tmp; \
-  xbps-reconfigure -a; \
+  xbps-reconfigure -fa; \
   rm -rf /var/cache/xbps/*
 CMD ["/bin/sh"]
 
@@ -74,6 +74,6 @@ FROM scratch AS image-full
 COPY --from=install-full /target /
 RUN \
   install -dm1777 tmp; \
-  xbps-reconfigure -a; \
+  xbps-reconfigure -fa; \
   rm -rf /var/cache/xbps/*
 CMD ["/bin/sh"]
