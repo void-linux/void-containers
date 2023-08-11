@@ -56,15 +56,3 @@ target "void-musl-full" {
   inherits = ["_common-musl"]
   target = "image-full"
 }
-
-group "default" {
-  targets = [
-    "void-glibc",
-    "void-glibc-busybox",
-    "void-glibc-full",
-    "void-musl",
-    "void-musl-busybox",
-    "void-musl-full",
-  ]
-}
-
