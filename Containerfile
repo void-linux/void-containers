@@ -71,7 +71,7 @@ RUN \
 CMD ["/bin/sh"]
 
 FROM scratch AS image-full
-COPY --from=install-full /target /
+COPY --link --from=install-full /target /
 RUN \
   install -dm1777 tmp; \
   xbps-reconfigure -fa; \
