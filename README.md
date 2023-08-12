@@ -7,7 +7,7 @@ images. There are 3 images provided for each libc (`glibc` or `musl`):
   `noextract` file to prevent certain directories from being added to
   the image. These images average 40-65MB.
 
-- `void-LIBC-full`: Large image based on the `base-container` package and
+- `void-LIBC-full`: Large image based on the base-minimal package and
   does not contain a `noextract` configuration. If you want something
   that is as close to a full void VM as possible, this is the image you
   want to start with.These images average 80-135MB.

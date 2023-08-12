@@ -49,7 +49,7 @@ RUN --mount=type=cache,sharing=locked,target=/target/var/cache/xbps,id=repocache
   XBPS_TARGET_ARCH=${ARCH} xbps-install -y \
     -R "${REPO}" \
     -r /target \
-    base-container
+    base-minimal
 
 FROM scratch AS image-default
 COPY --link --from=install-default /target /
