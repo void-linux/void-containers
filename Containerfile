@@ -7,6 +7,7 @@ RUN apk add ca-certificates curl && \
   curl "${MIRROR}/static/xbps-static-static-0.59_5.$(uname -m)-musl.tar.xz" | tar vJx
 COPY keys/* /target/var/db/xbps/keys/
 COPY setup.sh /bootstrap/setup.sh
+COPY noextract-python.conf /target/etc/xbps.d/noextract-python.conf
 RUN --mount=type=cache,sharing=locked,target=/target/var/cache/xbps,id=repocache-${LIBC} \
   . /bootstrap/setup.sh; \
   XBPS_TARGET_ARCH=${ARCH} xbps-install -S \
