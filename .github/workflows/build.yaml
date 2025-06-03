@@ -73,6 +73,14 @@ jobs:
             org.opencontainers.image.vendor=Void Linux
             org.opencontainers.image.title=Void Linux
             org.opencontainers.image.description=general-purpose image based on Void Linux
+          annotations: |
+            org.opencontainers.image.authors=Void Linux team and contributors
+            org.opencontainers.image.url=https://voidlinux.org
+            org.opencontainers.image.documentation=https://docs.voidlinux.org
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.vendor=Void Linux
+            org.opencontainers.image.title=Void Linux
+            org.opencontainers.image.description=general-purpose image based on Void Linux
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
