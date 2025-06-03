@@ -100,3 +100,5 @@ jobs:
           set: |
             _common.cache-to=type=gha
             _common.cache-from=type=gha
+          provenance: false
+          sbom: false
