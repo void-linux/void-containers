@@ -58,6 +58,7 @@ RUN \
   install -dm1777 tmp; \
   xbps-reconfigure -fa; \
   rm -rf /var/cache/xbps/*
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
 CMD ["/bin/sh"]
 
 FROM scratch AS image-busybox
@@ -69,6 +70,7 @@ RUN \
   install -dm1777 tmp; \
   xbps-reconfigure -fa; \
   rm -rf /var/cache/xbps/*
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
 CMD ["/bin/sh"]
 
 FROM scratch AS image-full
@@ -77,4 +79,5 @@ RUN \
   install -dm1777 tmp; \
   xbps-reconfigure -fa; \
   rm -rf /var/cache/xbps/*
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/bin
 CMD ["/bin/sh"]
